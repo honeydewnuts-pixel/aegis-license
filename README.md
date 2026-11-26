@@ -1,0 +1,2 @@
+# aegis-license
+EA Licensing 
