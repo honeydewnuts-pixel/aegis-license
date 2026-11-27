@@ -1,0 +1,21 @@
+*.db
+*.db-wal
+*.db-shm
+.env
+vendor_key.hex
+__pycache__/
+
+# local secrets and DBs — never commit
+.env
+.env.*
+*.db
+*.db-*
+/var/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+secrets/
+*.pem
+*.key

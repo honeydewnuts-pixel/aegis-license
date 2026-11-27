@@ -1,0 +1,33 @@
+# Render Blueprint — owner applies in Render dashboard / Blueprint.
+# Secrets are NOT stored here. Set AEGIS_VENDOR_KEY_HEX and AEGIS_DASHBOARD_TOKEN in Render UI only.
+
+services:
+  - type: web
+    name: aegis-licence
+    runtime: python
+    plan: starter
+    region: oregon
+    pythonVersion: "3.11.9"
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn wsgi:application --bind 0.0.0.0:$PORT --workers 1 --threads 4
+    disk:
+      name: aegis-licence-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: AEGIS_REQUIRE_HTTPS
+        value: "true"
+      - key: AEGIS_LICENCE_DB_PATH
+        value: /var/data/licences.db
+      - key: AEGIS_RATE_LIMIT_PER_IP_PER_MIN
+        value: "30"
+      - key: AEGIS_RATE_LIMIT_PER_SERIAL_PER_MIN
+        value: "20"
+      - key: AEGIS_VENDOR_KEY_HEX
+        sync: false
+        # OWNER SETS IN RENDER DASHBOARD ONLY — never commit a value
+      - key: AEGIS_DASHBOARD_TOKEN
+        sync: false
+        # OWNER SETS IN RENDER DASHBOARD ONLY — dashboard login password/token
